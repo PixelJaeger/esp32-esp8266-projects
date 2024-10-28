@@ -41,6 +41,8 @@ String oldday;
 String oldtemp;
 String oldhumi;
 String oldtime;
+
+// Kurz halten. Texte könne zu lang sein um dargestellt werden!
 String bottomtext[ARRAYSIZE] = {
   "A Python() a day keeps the C-Compiler away!",
   "If you can read this you're way to close!",
@@ -51,7 +53,7 @@ String bottomtext[ARRAYSIZE] = {
   "I'm here to chew gum and kick ass! But what is this C shit?!",
   "Duke Nukem Forever is a good game! Said no one ever...",
   "Crouching C Code, hidden PythonBomb",
-  "Wanna C(my)PP sounds bad. Wanna see my python sound better!",
+  "Wanna C(my)PP = bad. Wanna see my python = good",
   "Just Smile... you can\'t kill everyone!"
 };
 
