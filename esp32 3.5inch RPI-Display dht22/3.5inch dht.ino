@@ -10,7 +10,7 @@
 #include <WiFiUdp.h>
 #include "DHT.h"
 
-// Erhöhen wenn mehr Onliner in den "bottomtext[ARRAYSIZE]"" eingefügt werden
+// Erhöhen wenn mehr One-Liner in den "bottomtext[ARRAYSIZE]"" eingefügt werden
 #define ARRAYSIZE 11
 
 #define DHTPIN 27
@@ -18,9 +18,6 @@
 
 DHT dht(DHTPIN, DHTTYPE);
 TFT_eSPI tft = TFT_eSPI();
-
-//nicht sicher ob wichtig oder löschbar
-unsigned long drawTime = 0;
 
 // WLAN Name und Passwort infos
 const char* ssid     = "YOUR SSID HERE";
@@ -42,7 +39,7 @@ String oldtemp;
 String oldhumi;
 String oldtime;
 
-// Kurz halten. Texte könne zu lang sein um dargestellt werden!
+// nicht mehr als 60 Zeichen (Leerzeichen mitgerechnet!)
 String bottomtext[ARRAYSIZE] = {
   "A Python() a day keeps the C-Compiler away!",
   "If you can read this you're way to close!",
@@ -80,11 +77,10 @@ void setup(void) {
 
   timeClient.begin();
   // Zeitzonendifferenz in Sekunden
-  // GMT +1 = 3600
-  // GMT +8 = 28800
-  // GMT -1 = -3600
-  // GMT 0 = 0
-  timeClient.setTimeOffset(7200);
+  // GMT +1 Sommerzeit = 7200
+  // GMT +1 Winterzeit = 3600
+  // Automatisierung zur Zeit nicht implementiert.
+  timeClient.setTimeOffset(3600);
 
   tft.setTextColor(TFT_YELLOW, TFT_BLACK);
   tft.setTextPadding(60);
@@ -102,7 +98,6 @@ void setup(void) {
 
   tft.drawString("Luftfeuchtigkeit:",15,240,GFXFF);
   tft.drawString("%",370,240,GFXFF);
-
 }
 
 void loop() {
@@ -163,5 +158,4 @@ void loop() {
   }
 
   delay(schleife);
-
 }
