@@ -1,7 +1,3 @@
-// to-do:
-// alle 2(?) stunden wifi an und neues ntp holen
-// code aufräumen
-
 #include <TFT_eSPI.h> // Hardware-Spezifische Lib
 #include <SPI.h>
 #include "Free_Fonts.h" // Verschiedene Schrifttyp-Definitionen laden
@@ -20,8 +16,8 @@ DHT dht(DHTPIN, DHTTYPE);
 TFT_eSPI tft = TFT_eSPI();
 
 // WLAN Name und Passwort infos
-const char* ssid     = "YOUR SSID HERE";
-const char* password = "YOUR WLAN PASSWORD HERE";
+const char* ssid     = "SSID HIER";
+const char* password = "PASSWORT HIER";
 
 // NTP-Client
 WiFiUDP ntpUDP;
@@ -56,6 +52,8 @@ String bottomtext[ARRAYSIZE] = {
 
 int rnd_q;
 int old_q;
+int counter = 0;
+int counter_target = 600;
 
 // mogel und schleife können angepasst werden
 // Wegen Limitationen des DHT22 darf schleife nicht auf weniger als 2 Sekunden (2000) gesetzt werden!
@@ -63,6 +61,7 @@ int mogel = 0;
 int schleife = 10000;
 
 void setup(void) {
+  Serial.begin(9600);
 
   tft.begin();
   tft.setRotation(1);
@@ -157,5 +156,16 @@ void loop() {
   old_q = rnd_q;
   }
 
+  // get new time from NTP every ~10 minutes
+  counter = counter + 10;
+//  Serial.print(counter);  // debug text to Serial Monitor
+//  Serial.println(); // debug text to Serial Monitor
+
+  if (counter >= counter_target) {
+    timeClient.forceUpdate();
+//    Serial.print('getting new time'); // debug text to Serial Monitor
+//    Serial.println(); // debug text to Serial Monitor
+    counter = 0;
+  }
   delay(schleife);
 }
