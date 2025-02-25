@@ -6,8 +6,8 @@
 #include <WiFiUdp.h>
 #include "DHT.h"
 
-// Erhöhen wenn mehr One-Liner in den "bottomtext[ARRAYSIZE]"" eingefügt werden
-#define ARRAYSIZE 11
+// Erhöhen wenn mehr One-Liner in den "bottomtext[ARRAYSIZE]" eingefügt werden
+#define ARRAYSIZE 15
 
 #define DHTPIN 27
 #define DHTTYPE DHT22
@@ -47,13 +47,17 @@ String bottomtext[ARRAYSIZE] = {
   "Duke Nukem Forever is a good game! Said no one ever...",
   "Crouching C Code, hidden PythonBomb",
   "Wanna C(my)PP = bad. Wanna see my python = good",
+  "[...] werde am Donnerstag ins homeoffice machen [...]",
+  "Leeeerooooyyyy Jeeeenkins!!!",
+  "Twitch.tv! The biggest source of bullshit on the net.",
+  "Your ad could be displayed here for only 1232,01 USD",
   "Just Smile... you can\'t kill everyone!"
 };
 
 int rnd_q;
 int old_q;
 int counter = 0;
-int counter_target = 600;
+int counter_target = 3600;
 
 // mogel und schleife können angepasst werden
 // Wegen Limitationen des DHT22 darf schleife nicht auf weniger als 2 Sekunden (2000) gesetzt werden!
@@ -61,8 +65,6 @@ int mogel = 0;
 int schleife = 10000;
 
 void setup(void) {
-  Serial.begin(9600);
-
   tft.begin();
   tft.setRotation(1);
   tft.fillScreen(TFT_BLACK);
@@ -158,13 +160,9 @@ void loop() {
 
   // get new time from NTP every ~10 minutes
   counter = counter + 10;
-//  Serial.print(counter);  // debug text to Serial Monitor
-//  Serial.println(); // debug text to Serial Monitor
 
   if (counter >= counter_target) {
     timeClient.forceUpdate();
-//    Serial.print('getting new time'); // debug text to Serial Monitor
-//    Serial.println(); // debug text to Serial Monitor
     counter = 0;
   }
   delay(schleife);
